@@ -1,0 +1,76 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh; */
+    background-color: #f4f4f4;
+}
+
+.container {
+    background-color: white;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 0.7em;
+}
+
+.form-data {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+}
+
+.sign-up-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+input {
+    padding: 0.8em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+}
+.checkbox-label{
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+}
+
+.submit-button {
+    background-color: #533805;
+    color: white;
+    border: none;
+    padding: 1em;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #3c2806;
+}
+.have-account{
+    font-size: 0.9em;
+}
+.have-account a{
+    color: #533805;
+    font-weight: 600;
+}
+.have-account a:hover{
+    color: #170f00;
+}

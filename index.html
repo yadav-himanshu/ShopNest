@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopNest</title>
+    <link rel="stylesheet" href="./css/styles.css"> 
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="./assets/logo.png" alt="ShopNest Logo">
+                <span>ShopNest</span>
+            </div>
+            <h1>Welcome to the ShopNest</h1>
+
+            <div class="btn-container">
+                <button class="signup-button" onclick="window.location.href='signup.html'">Sign Up</button>
+                <button class="signup-button" onclick="window.location.href='login.html'">Login</button>
+            </div>
+            
+            <div id="user-info" style="display: none;">
+                <span id="user-name"></span> <!-- Display the logged-in user's name -->
+                <button id="logout-button" class="nav-button signup-button">Logout</button>
+            </div>
+            
+
+
+        </div>
+    </nav>
+    <div class="cards-container">
+        <div id="cards"></div> 
+    </div>
+    
+    <footer>
+        <p>&copy; 2024 Your ShopNest</p>
+    </footer>
+
+    <script src="./js/fetchData.js"></script> 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const userName = localStorage.getItem('loggedInUser');
+            const userInfo = document.getElementById('user-info');
+            const userNameSpan = document.getElementById('user-name');
+            const btnContainer = document.querySelector('.btn-container');
+    
+            if (isLoggedIn === 'true' && userName) {
+                userInfo.style.display = 'block';
+                userNameSpan.textContent = `Welcome, ${userName}`;
+                btnContainer.style.display = 'none';
+            }
+    
+            // Logout functionality
+            document.getElementById('logout-button').addEventListener('click', function() {
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('loggedInUser');
+                window.location.reload();
+            });
+        });
+    </script>
+    
+</body>
+</html>

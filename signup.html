@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="./css/style.signup.css">
+</head>
+<body>
+
+    <div class="container">
+        <form id="signupForm">
+            <div class="form-data">
+                <h1>Sign up</h1>
+
+                <div class="sign-up-column">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" placeholder="First Name" required>
+                </div>
+                
+                <div class="sign-up-column">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" placeholder="Last Name" required>
+                </div>
+                
+                <div class="sign-up-column">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Enter email" required>
+                </div>
+                
+                <div class="sign-up-column">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter Password" required>
+                </div>
+                
+                <div class="sign-up-column">
+                    <label for="repeatPassword">Repeat Password</label>
+                    <input type="password" id="repeatPassword" placeholder="Repeat Password" required>
+                </div>
+                
+                <div class="sign-up-column">
+                    <label for="" class="checkbox-label">
+                        <input type="checkbox" id="terms" required> I agree to the Terms and Conditions
+                    </label>
+                </div>
+                <button type="submit" class="submit-button">Submit</button>
+                <div class="have-account">
+                    <span>Already have an account <a href="login.html">click here to login </a></span>
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <script src="./js/signup.js"></script>
+</body>
+</html>
