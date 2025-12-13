@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout • ShopNest</title>
+  <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/checkout.css" />
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav__container">
+      <a class="brand" href="index.html">
+        <img src="./assets/logo.png" alt="ShopNest Logo" class="brand__logo" />
+        <span class="brand__name">ShopNest</span>
+      </a>
+
+      <button class="menuBtn" id="menu-toggle" type="button" aria-label="Toggle menu">☰</button>
+
+      <div class="menu" id="nav-menu" data-open="false">
+        <div class="nav__links">
+          <a class="btn btn--ghost" href="index.html">Shop</a>
+          <a class="btn btn--ghost" href="cart.html">Cart <span class="pill" id="nav-cart-count">0</span></a>
+          <a class="btn btn--ghost" href="checkout.html">Checkout</a>
+        </div>
+
+        <div class="nav__right">
+          <div class="nav__guest" id="guest-actions">
+            <a class="btn btn--ghost" href="signup.html">Sign Up</a>
+            <a class="btn btn--primary" href="login.html">Sign In</a>
+          </div>
+
+          <div class="nav__user" id="user-actions" hidden>
+            <span class="nav__welcome" id="user-name">Hi</span>
+            <button class="btn btn--ghost" id="logout-button" type="button">Logout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page">
+    <div class="page__container">
+      <h1 class="page__title">Checkout</h1>
+      <p class="page__subtitle">
+        Demo checkout — no payment is collected. We simulate a successful order.
+      </p>
+    </div>
+  </header>
+
+  <main class="page__container">
+    <section class="checkout">
+      <form class="panel" id="checkout-form">
+        <h2 class="panel__title">Shipping details</h2>
+
+        <div class="grid2">
+          <div class="field">
+            <label>Full name</label>
+            <input class="input" required placeholder="Your full name" />
+          </div>
+          <div class="field">
+            <label>Phone</label>
+            <input class="input" required placeholder="10-digit phone" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Address</label>
+          <input class="input" required placeholder="House no, street, area" />
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <label>City</label>
+            <input class="input" required placeholder="City" />
+          </div>
+          <div class="field">
+            <label>Pincode</label>
+            <input class="input" required placeholder="Pincode" />
+          </div>
+        </div>
+
+        <div class="noticeBox">
+          <strong>Payment disabled:</strong> This project focuses on UI + cart + checkout flow.
+          Clicking “Place order” will generate a demo order confirmation.
+        </div>
+
+        <button class="btn btn--primary" type="submit" id="place-order">Place order (Demo)</button>
+        <a class="btn btn--ghost" href="cart.html">← Back to cart</a>
+      </form>
+
+      <aside class="panel">
+        <h2 class="panel__title">Order summary</h2>
+        <div id="checkout-items" class="miniList"></div>
+
+        <div class="row">
+          <span>Items</span>
+          <span id="co-items">0</span>
+        </div>
+        <div class="row">
+          <span>Subtotal</span>
+          <span id="co-subtotal">$0.00</span>
+        </div>
+        <div class="row row--total">
+          <span>Total</span>
+          <span id="co-total">$0.00</span>
+        </div>
+
+        <div id="empty-checkout" class="empty" hidden>
+          Your cart is empty. Add items before checkout.
+        </div>
+      </aside>
+    </section>
+
+    <section id="order-success" class="success" hidden>
+      <h2 style="margin:0 0 8px;">Order placed successfully ✅</h2>
+      <p style="margin:0; color: var(--muted);">
+        This is a demo confirmation. Your cart has been cleared.
+      </p>
+      <div style="margin-top:12px;">
+        <a class="btn btn--primary" href="index.html">Continue shopping</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="page__container">
+      <div class="footer__bottom">
+        <span>© 2025 ShopNest. All rights reserved.</span>
+        <span>Demo checkout • No payments collected</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/checkout.js" type="module"></script>
+</body>
+</html>

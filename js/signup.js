@@ -1,34 +1,22 @@
-document.getElementById('signupForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevents the default form submission behavior
+import { saveUser, loginUser } from "./auth.js";
 
-    // Collect form data
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const repeatPassword = document.getElementById('repeatPassword').value;
+document.getElementById("signupForm")?.addEventListener("submit", (event) => {
+  event.preventDefault();
 
-    // Form validation
-    if (password !== repeatPassword) {
-        alert('Passwords do not match!');
-        return;
-    }
+  const firstName = document.getElementById("firstName").value.trim();
+  const lastName = document.getElementById("lastName").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const repeatPassword = document.getElementById("repeatPassword").value;
 
-    const userData = {
-        firstName,
-        lastName,
-        email,
-        password
-    };
+  if (password !== repeatPassword) {
+    alert("Passwords do not match!");
+    return;
+  }
 
-    // Store user data in localStorage
-    localStorage.setItem("user", JSON.stringify(userData));
-    console.log(userData)
+  const userData = { firstName, lastName, email, password };
+  saveUser(userData);
 
-    localStorage.setItem('isLoggedIn', 'true');
-    localStorage.setItem('loggedInUser', firstName);
-
-    window.location.href = "index.html";
-
-    // Redirect to the main page after successful signup
+  loginUser(firstName);
+  window.location.href = "index.html";
 });

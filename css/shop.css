@@ -1,0 +1,224 @@
+.toolbar {
+  margin: 18px 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 980px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+.card {
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(18, 26, 41, 0.88), rgba(15, 22, 36, 0.88));
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 440px;
+  cursor: pointer;
+}
+
+.card__media {
+  height: 210px;
+  background: rgba(255, 255, 255, 0.03);
+  display: grid;
+  place-items: center;
+}
+
+.card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 16px;
+}
+
+.card__body {
+  padding: 14px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.card__title {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: 900;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card__desc {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.price { font-weight: 900; letter-spacing: 0.3px; }
+
+.category {
+  font-size: 12px;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.card__actions {
+  padding: 0 14px 14px;
+  display: flex;
+  gap: 10px;
+}
+
+.btn--cart { width: 100%; }
+
+.btn--view {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+}
+
+.pagination {
+  margin: 18px 0 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pagination__pages {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Skeleton */
+.skel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(255,255,255,0.04);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  min-height: 440px;
+}
+
+.skel__media {
+  height: 210px;
+  background: rgba(255,255,255,0.06);
+}
+
+.skel__line {
+  height: 14px;
+  margin: 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+}
+
+.skel__line.sm { width: 55%; }
+.skel__line.md { width: 80%; }
+.skel__line.lg { width: 92%; }
+
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 100;
+}
+.modal[aria-hidden="false"] { display: block; }
+
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+}
+
+.modal__panel {
+  position: relative;
+  width: min(900px, calc(100% - 24px));
+  margin: 70px auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(18, 26, 41, 0.96), rgba(15, 22, 36, 0.96));
+  box-shadow: var(--shadow);
+  padding: 14px;
+}
+
+.modal__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.modalGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 14px;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .modalGrid { grid-template-columns: 1fr; }
+}
+
+.modalImg {
+  height: 340px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.04);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.modalImg img { width: 100%; height: 100%; object-fit: contain; padding: 16px; }
+
+.modalTitle { margin: 0; font-size: 18px; font-weight: 900; }
+.modalText { color: var(--muted); line-height: 1.6; margin: 10px 0; }
+
+.modalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}

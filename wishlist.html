@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wishlist • ShopNest</title>
+  <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/wishlist.css" />
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav__container">
+      <a class="brand" href="index.html">
+        <img src="./assets/logo.png" alt="ShopNest Logo" class="brand__logo" />
+        <span class="brand__name">ShopNest</span>
+      </a>
+
+      <button class="menuBtn" id="menu-toggle" type="button" aria-label="Toggle menu">☰</button>
+
+      <div class="menu" id="nav-menu" data-open="false">
+        <div class="nav__links">
+          <a class="btn btn--ghost" href="index.html">Shop</a>
+          <a class="btn btn--ghost" href="wishlist.html">Wishlist <span class="pill" id="nav-wishlist-count">0</span></a>
+          <a class="btn btn--ghost" href="cart.html">Cart <span class="pill" id="nav-cart-count">0</span></a>
+        </div>
+
+        <div class="nav__right">
+          <div class="nav__guest" id="guest-actions">
+            <a class="btn btn--ghost" href="signup.html">Sign Up</a>
+            <a class="btn btn--primary" href="login.html">Sign In</a>
+          </div>
+
+          <div class="nav__user" id="user-actions" hidden>
+            <span class="nav__welcome" id="user-name">Hi</span>
+            <button class="btn btn--ghost" id="logout-button" type="button">Logout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page">
+    <div class="page__container">
+      <h1 class="page__title">Your Wishlist</h1>
+      <p class="page__subtitle">Save items for later. Add to cart anytime.</p>
+    </div>
+  </header>
+
+  <main class="page__container">
+    <section class="wishlist">
+      <div id="wishlist-items" class="wishlist__items"></div>
+
+      <div class="wishlist__actions">
+        <button class="btn btn--ghost" id="clear-wishlist" type="button">Clear Wishlist</button>
+        <a class="btn btn--primary" href="index.html">Continue Shopping</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="page__container">
+      <div class="footer__bottom">
+        <span>© 2025 ShopNest. All rights reserved.</span>
+        <span>Wishlist • localStorage demo</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/wishlist.js" type="module"></script>
+</body>
+</html>

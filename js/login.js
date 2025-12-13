@@ -1,33 +1,22 @@
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevents the default form submission behavior
+import { getStoredUser, loginUser } from "./auth.js";
 
-    console.log('Form submitted');
+document.getElementById("loginForm")?.addEventListener("submit", (event) => {
+  event.preventDefault();
 
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value;
 
-    // Collect form data
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
+  const user = getStoredUser();
 
-    console.log(`Email: ${email}, Password: ${password}`);
+  if (!user) {
+    alert("No user found. Please sign up first.");
+    return;
+  }
 
-
-    // Retrieve user data from localStorage
-    const storedUserData = JSON.parse(localStorage.getItem('user'));
-    console.log('Stored user data:', storedUserData);
-
-    // Check if user exists and validate credentials
-    if (storedUserData) {
-        if (storedUserData.email === email && storedUserData.password === password) {
-            alert('Login successful!'); 
-
-            localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('loggedInUser', storedUserData.firstName);
-
-            window.location.href = "index.html"; 
-        } else {
-            alert('Invalid email or password!'); 
-        }
-    } else {
-        alert('No user found. Please sign up first.');
-    }
+  if (user.email === email && user.password === password) {
+    loginUser(user.firstName);
+    window.location.href = "index.html";
+  } else {
+    alert("Invalid email or password!");
+  }
 });

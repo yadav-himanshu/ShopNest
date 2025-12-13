@@ -1,35 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="./css/login.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login • ShopNest</title>
+  <link rel="stylesheet" href="./css/auth.css" />
 </head>
 <body>
+  <main class="auth">
+    <section class="auth__card">
+      <h1 class="auth__title">Login</h1>
 
-    <div class="container">
-        <form id="loginForm">
-            <div class="form-data">
-                <h1>Login</h1>
+      <form id="loginForm" class="form">
+        <div class="field">
+          <label for="loginEmail">Email</label>
+          <input class="input" type="email" id="loginEmail" placeholder="Enter email" required />
+        </div>
 
-                <div class="login-column">
-                    <label for="email">Email</label>
-                    <input type="email" id="loginEmail" placeholder="Enter email" required>
-                </div>
-                
-                <div class="login-column">
-                    <label for="password">Password</label>
-                    <input type="password" id="loginPassword" placeholder="Enter Password" required>
-                </div>
+        <div class="field">
+          <label for="loginPassword">Password</label>
+          <input class="input" type="password" id="loginPassword" placeholder="Enter password" required />
+        </div>
 
-                <button type="submit" class="login-button">Login</button>
-                <div class="not-have-account">
-                    <span>Don't have an account <a href="signup.html">Click here for Signup </a></span>
-                </div>
-            </div>
-        </form>
-    </div>
-    <script src="./js/login.js"></script>
+        <button class="btn btn--primary" type="submit">Login</button>
+
+        <p class="helper">
+          Don’t have an account? <a href="signup.html">Sign up</a>
+        </p>
+        <p class="helper">
+          <a href="index.html">← Back to shop</a>
+        </p>
+      </form>
+    </section>
+  </main>
+
+  <script src="./js/login.js" type="module"></script>
 </body>
 </html>
