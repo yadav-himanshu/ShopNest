@@ -1,5 +1,8 @@
 import { initAuthUI } from "./auth-ui.js";
 import { getCart, getCartCount, updateQty, removeFromCart, clearCart } from "./cartStore.js";
+import { loadFooter } from "./footer.js";
+
+loadFooter();
 
 function money(n) {
   return `$${Number(n).toFixed(2)}`;

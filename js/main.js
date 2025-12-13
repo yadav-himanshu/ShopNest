@@ -2,6 +2,9 @@ import { getProducts } from "./api.js";
 import { initProducts, showSkeleton } from "./products.js";
 import { initAuthUI } from "./auth-ui.js";
 import { getCartCount } from "./cartStore.js";
+import { loadFooter } from "./footer.js";
+
+loadFooter();
 
 function renderNavCartCount() {
   const el = document.getElementById("nav-cart-count");
