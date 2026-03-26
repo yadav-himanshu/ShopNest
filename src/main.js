@@ -14,6 +14,10 @@ import { ProfilePage } from './pages/ProfilePage.js';
 import { EditProfilePage } from './pages/EditProfilePage.js';
 import { OrderDetailsPage } from './pages/OrderDetailsPage.js';
 import { WishlistPage } from './pages/WishlistPage.js';
+import { AboutPage } from './pages/AboutPage.js';
+import { CareersPage } from './pages/CareersPage.js';
+import { TermsPage } from './pages/TermsPage.js';
+import { PrivacyPage } from './pages/PrivacyPage.js';
 
 import { AuthService } from './services/AuthService.js';
 
@@ -71,6 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     router.addRoute('/wishlist', WishlistPage);
+    router.addRoute('/about', AboutPage);
+    router.addRoute('/careers', CareersPage);
+    router.addRoute('/terms', TermsPage);
+    router.addRoute('/privacy', PrivacyPage);
 
     // Start routing
     router.start();
