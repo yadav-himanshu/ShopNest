@@ -69,7 +69,7 @@ export class ShopPage {
 
         const gridEl = this.root.querySelector('#product-grid');
         gridEl.innerHTML = '';
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 12; i++) {
             gridEl.appendChild(Skeleton.productCard());
         }
 
@@ -207,6 +207,8 @@ export class ShopPage {
 
     renderPagination(totalPages) {
         const container = this.root.querySelector('#pagination-container');
+        if (!container) return;
+
         if (totalPages <= 1) {
             container.innerHTML = '';
             return;
@@ -340,7 +342,7 @@ export class ShopPage {
       }
       .product-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        grid-template-columns: repeat(4, 1fr);
         gap: var(--space-8);
         margin-bottom: var(--space-12);
       }
@@ -394,12 +396,19 @@ export class ShopPage {
         align-items: center;
         gap: var(--space-4);
       }
+      @media (max-width: 1024px) {
+        .product-grid { grid-template-columns: repeat(3, 1fr); }
+      }
       @media (max-width: 768px) {
         .hero-title { font-size: 2.5rem; }
         .shop-toolbar { gap: var(--space-4); }
         .toolbar-search { min-width: 100%; }
         .toolbar-filters { width: 100%; justify-content: space-between; }
         .toolbar-select { min-width: 48%; }
+        .product-grid { grid-template-columns: repeat(2, 1fr); }
+      }
+      @media (max-width: 480px) {
+        .product-grid { grid-template-columns: 1fr; }
       }
     `;
         document.head.appendChild(style);
