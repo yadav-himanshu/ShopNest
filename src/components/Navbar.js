@@ -59,6 +59,9 @@ export class Navbar {
               <a href="/?category=women's clothing" class="nav-link">Women</a>
               <a href="/?category=electronics" class="nav-link">Tech</a>
               <a href="/?category=jewelery" class="nav-link">Gems</a>
+              <div class="mobile-only-auth">
+                ${authHTML}
+              </div>
             </div>
           </div>
 
@@ -68,7 +71,9 @@ export class Navbar {
                 <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
                 <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
               </button>
-              ${authHTML}
+              <div class="desktop-only-auth">
+                ${authHTML}
+              </div>
               <a href="/wishlist" class="nav-icon-btn" aria-label="Wishlist">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
               </a>
@@ -137,6 +142,24 @@ export class Navbar {
         localStorage.setItem('theme', newTheme);
       });
     }
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      const navLinks = this.container.querySelector('.nav-links');
+      const mobileBtn = this.container.querySelector('#mobile-menu-btn');
+      if (navLinks.classList.contains('active')) {
+        if (!navLinks.contains(e.target) && !mobileBtn.contains(e.target)) {
+          navLinks.classList.remove('active');
+        }
+      }
+    });
+
+    // Close menu when clicking a link
+    this.container.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        this.container.querySelector('.nav-links').classList.remove('active');
+      });
+    });
   }
 
   static injectStyles() {
@@ -305,11 +328,26 @@ export class Navbar {
       }
 
       .mobile-menu-toggle { display: none; }
+      .mobile-only-auth { display: none; }
 
       @media (max-width: 900px) {
-        .nav-links { display: none; }
+        .desktop-only-auth { display: none; }
+        .mobile-only-auth { 
+          display: block; 
+          margin-top: var(--space-4);
+          padding-top: var(--space-4);
+          border-top: 1px solid var(--border-light);
+        }
+        .nav-links { 
+          display: none; 
+          transform: translateY(-10px);
+          opacity: 0;
+          transition: transform 0.3s ease, opacity 0.3s ease;
+        }
         .nav-links.active {
           display: flex;
+          opacity: 1;
+          transform: translateY(0);
           flex-direction: column;
           position: absolute;
           top: var(--header-height);
@@ -319,9 +357,16 @@ export class Navbar {
           padding: var(--space-6);
           border-bottom: 1px solid var(--border-light);
           box-shadow: var(--shadow-lg);
+          z-index: 1001;
+        }
+        .nav-link {
+          padding: var(--space-3) 0;
+          font-size: 1.125rem;
         }
         .mobile-menu-toggle { display: block; }
         .cart-label { display: none; }
+        .nav-actions { gap: var(--space-2); }
+        .nav-icon-btn { width: 36px; height: 36px; }
       }
     `;
     document.head.appendChild(style);
