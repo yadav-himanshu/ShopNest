@@ -10,10 +10,12 @@ export class WishlistService {
         if (index === -1) {
             wishlist.push(product);
             localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            window.dispatchEvent(new CustomEvent('wishlist:updated'));
             return true; // Added
         } else {
             wishlist.splice(index, 1);
             localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            window.dispatchEvent(new CustomEvent('wishlist:updated'));
             return false; // Removed
         }
     }

@@ -1,5 +1,6 @@
 import { AuthService } from '../services/AuthService.js';
 import { CartService } from '../services/CartService.js';
+import { WishlistService } from '../services/WishlistService.js';
 import { createElementFromHTML } from '../utils/helpers.js';
 
 export class Navbar {
@@ -12,6 +13,7 @@ export class Navbar {
 
     window.addEventListener('auth:change', () => this.render());
     window.addEventListener('cart:updated', () => this.updateCartCount());
+    window.addEventListener('wishlist:updated', () => this.updateWishlistCount());
 
     this.injectStyles();
   }
@@ -24,6 +26,7 @@ export class Navbar {
     const isAuthenticated = AuthService.isAuthenticated();
     const user = isAuthenticated ? AuthService.getUser() : null;
     const cartCount = CartService.getCartCount();
+    const wishlistCount = WishlistService.getWishlist().length;
 
     const authHTML = isAuthenticated
       ? `
@@ -74,8 +77,11 @@ export class Navbar {
               <div class="desktop-only-auth">
                 ${authHTML}
               </div>
-              <a href="/wishlist" class="nav-icon-btn" aria-label="Wishlist">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+              <a href="/wishlist" class="nav-icon-btn nav-wishlist-btn" aria-label="Wishlist">
+                <div class="wishlist-icon-wrapper">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                  <span class="wishlist-badge ${wishlistCount > 0 ? 'visible' : ''}">${wishlistCount}</span>
+                </div>
               </a>
               <button id="nav-cart-btn" class="nav-cart-trigger" aria-label="Open cart">
                 <div class="cart-icon-wrapper">
@@ -87,7 +93,8 @@ export class Navbar {
             </div>
             
             <button id="mobile-menu-btn" class="mobile-menu-toggle" aria-label="Menu">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+              <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+              <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
           </div>
         </div>
@@ -103,6 +110,18 @@ export class Navbar {
     const badge = this.container.querySelector('.cart-badge');
     if (badge) {
       badge.textContent = CartService.getCartCount();
+      badge.classList.add('pop');
+      setTimeout(() => badge.classList.remove('pop'), 300);
+    }
+  }
+
+  static updateWishlistCount() {
+    if (!this.container) return;
+    const badge = this.container.querySelector('.wishlist-badge');
+    if (badge) {
+      const count = WishlistService.getWishlist().length;
+      badge.textContent = count;
+      badge.classList.toggle('visible', count > 0);
       badge.classList.add('pop');
       setTimeout(() => badge.classList.remove('pop'), 300);
     }
@@ -129,7 +148,9 @@ export class Navbar {
     const mobileBtn = this.container.querySelector('#mobile-menu-btn');
     if (mobileBtn) {
       mobileBtn.addEventListener('click', () => {
-        this.container.querySelector('.nav-links').classList.toggle('active');
+        const navLinks = this.container.querySelector('.nav-links');
+        const isOpen = navLinks.classList.toggle('active');
+        mobileBtn.classList.toggle('is-open', isOpen);
       });
     }
 
@@ -150,6 +171,7 @@ export class Navbar {
       if (navLinks.classList.contains('active')) {
         if (!navLinks.contains(e.target) && !mobileBtn.contains(e.target)) {
           navLinks.classList.remove('active');
+          mobileBtn.classList.remove('is-open');
         }
       }
     });
@@ -158,6 +180,7 @@ export class Navbar {
     this.container.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', () => {
         this.container.querySelector('.nav-links').classList.remove('active');
+        this.container.querySelector('#mobile-menu-btn').classList.remove('is-open');
       });
     });
   }
@@ -328,7 +351,37 @@ export class Navbar {
       }
 
       .mobile-menu-toggle { display: none; }
+      .mobile-menu-toggle .close-icon { display: none; }
+      .mobile-menu-toggle.is-open .hamburger-icon { display: none; }
+      .mobile-menu-toggle.is-open .close-icon { display: block; }
+
       .mobile-only-auth { display: none; }
+
+      .wishlist-icon-wrapper { position: relative; }
+      .wishlist-badge {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        background: #ef4444;
+        color: white;
+        font-size: 0.65rem;
+        font-weight: 800;
+        min-width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid var(--bg-primary);
+      }
+      .wishlist-badge.visible { display: flex; }
+
+      .pop { animation: badge-pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+      @keyframes badge-pop {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.4); }
+        100% { transform: scale(1); }
+      }
 
       @media (max-width: 900px) {
         .desktop-only-auth { display: none; }
