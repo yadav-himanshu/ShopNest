@@ -1,179 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ShopNest • Everyday Essentials</title>
 
-    <link rel="stylesheet" href="./css/base.css" />
-    <link rel="stylesheet" href="./css/shop.css" />
-  </head>
-  <body>
-    <!-- Header -->
-    <nav class="nav">
-      <div class="nav__container">
-        <a class="brand" href="index.html" aria-label="ShopNest Home">
-          <img
-            src="./assets/logo.png"
-            alt="ShopNest Logo"
-            class="brand__logo"
-          />
-          <span class="brand__name">ShopNest</span>
-        </a>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShopNest • Premium E-commerce</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='url(%23g)'/><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='%23a855f7'/><stop offset='100%' stop-color='%236366f1'/></linearGradient></defs><text x='50' y='70' fill='white' font-family='Inter, sans-serif' font-weight='800' font-size='65' text-anchor='middle'>S</text></svg>">
 
-        <button
-          class="menuBtn"
-          id="menu-toggle"
-          type="button"
-          aria-label="Toggle menu"
-        >
-          ☰
-        </button>
+  <link rel="stylesheet" href="./src/styles/variables.css" />
+  <link rel="stylesheet" href="./src/styles/global.css" />
+  <link rel="stylesheet" href="./src/styles/components.css" />
 
-        <div class="menu" id="nav-menu" data-open="false">
-          <div class="nav__links">
-            <a class="btn btn--ghost" href="index.html">Shop</a>
-            <!-- <a class="btn btn--ghost" href="wishlist.html" -->
-              <!-- >Wishlist <span class="pill" id="nav-wishlist-count">0</span></a
-            > -->
-            <a class="btn btn--ghost" href="cart.html"
-              >Cart <span class="pill" id="nav-cart-count">0</span></a
-            >
-          </div>
+  <!-- Theme Init Script - Prevent Flash -->
+  <script>
+    (function () {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+    })();
+  </script>
+</head>
 
-          <div class="nav__right">
-            <div class="nav__guest" id="guest-actions">
-              <a class="btn btn--ghost" href="signup.html">Sign Up</a>
-              <a class="btn btn--primary" href="login.html">Sign In</a>
-            </div>
+<body>
+  <!-- Navbar Container -->
+  <div id="navbar-root"></div>
 
-            <div class="nav__user" id="user-actions" hidden>
-              <span class="nav__welcome" id="user-name"></span>
-              <button class="btn btn--ghost" id="logout-button" type="button">
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
+  <!-- Main Content Rendering Area for SPA Router -->
+  <main id="app-root"></main>
 
-    <header class="page">
-      <div class="page__container">
-        <h1 class="page__title">Shop smarter. Live better.</h1>
-        <p class="page__subtitle">
-          Find everything you need in one place — quality products, easy search, and smooth shopping
-        </p>
-      </div>
-    </header>
+  <!-- Footer Container -->
+  <div id="footer-root"></div>
 
-    <main class="page__container">
-      <section class="toolbar" aria-label="Products toolbar">
-        <div class="toolbar__left">
-          <span class="badge" id="result-count">Loading products…</span>
-        </div>
+  <!-- Toast Notifications Container -->
+  <div id="toast-root"></div>
 
-        <div class="toolbar__right">
-          <input
-            id="search-input"
-            class="input"
-            type="search"
-            placeholder="Search products, categories…"
-          />
+  <!-- Cart Drawer Container -->
+  <div id="cart-drawer-root"></div>
 
-          <select
-            id="category-select"
-            class="select"
-            aria-label="Category filter"
-          >
-            <option value="all">All categories</option>
-          </select>
+  <!-- Entry script -->
+  <script type="module" src="./src/main.js"></script>
+</body>
 
-          <select id="sort-select" class="select" aria-label="Sort">
-            <option value="default">Sort: Recommended</option>
-            <option value="price-asc">Price: Low → High</option>
-            <option value="price-desc">Price: High → Low</option>
-            <option value="title-asc">Title: A → Z</option>
-            <option value="title-desc">Title: Z → A</option>
-          </select>
-        </div>
-      </section>
-
-      <section aria-label="Product grid">
-        <div id="cards" class="grid" aria-live="polite"></div>
-      </section>
-
-      <nav class="pagination" aria-label="Pagination">
-        <button class="btn btn--ghost" id="prev-page" type="button">
-          Prev
-        </button>
-        <div class="pagination__pages" id="page-buttons"></div>
-        <button class="btn btn--ghost" id="next-page" type="button">
-          Next
-        </button>
-      </nav>
-
-      <!-- Modal -->
-      <div
-        class="modal"
-        id="product-modal"
-        aria-hidden="true"
-        role="dialog"
-        aria-label="Product details"
-      >
-        <div class="modal__backdrop" data-close="true"></div>
-        <div class="modal__panel" role="document">
-          <button
-            class="modal__close"
-            type="button"
-            data-close="true"
-            aria-label="Close"
-          >
-            ×
-          </button>
-          <div id="modal-content"></div>
-        </div>
-      </div>
-    </main>
-
-    <!-- Footer -->
-     <!-- <footer class="footer">
-      <div class="page__container">
-        <div class="footer__grid">
-          <div>
-            <h3 class="footer__title">ShopNest</h3>
-            <p class="footer__text">
-              A modern eCommerce UI project built with Vanilla JavaScript.
-              Browse products, open details, and manage a cart using
-              localStorage — designed to be clean, fast, and CV-ready.
-            </p>
-          </div>
-
-          <div>
-            <h3 class="footer__title">Quick links</h3>
-            <div class="footer__links">
-              <a href="index.html">Shop</a>
-              <a href="cart.html">Cart</a>
-            </div>
-          </div>
-
-          <div>
-            <h3 class="footer__title">Support</h3>
-            <p class="footer__text">Email: support@shopnest.demo</p>
-            <p class="footer__text">Hours: Mon–Sat, 10:00 AM – 6:00 PM</p>
-            <p class="footer__text">
-              This is a demo project — payments are not enabled.
-            </p>
-          </div>
-        </div>
-
-        <div class="footer__bottom">
-          <span>© 2025 ShopNest. All rights reserved.</span>
-          <span>Built by you • HTML • CSS • JavaScript</span>
-        </div>
-      </div>
-    </footer> -->
-
-    <script src="./js/main.js" type="module"></script>
-  </body>
 </html>
