@@ -12,6 +12,8 @@ export class ShopPage {
         this.currentSort = 'default';
         this.searchQuery = '';
         this.isLoading = true;
+        this.currentPage = 1;
+        this.itemsPerPage = 12;
     }
 
     async render() {
@@ -59,6 +61,8 @@ export class ShopPage {
 
           <div id="product-grid" class="product-grid">
           </div>
+
+          <div id="pagination-container" class="pagination-container"></div>
         </section>
       </div>
     `;
@@ -113,11 +117,13 @@ export class ShopPage {
 
         searchInput.addEventListener('input', (e) => {
             this.searchQuery = e.target.value.toLowerCase();
+            this.currentPage = 1; // Reset to page 1 on search
             this.updateView();
         });
 
         catSelect.addEventListener('change', (e) => {
             this.currentCategory = e.target.value;
+            this.currentPage = 1; // Reset to page 1 on category change
             this.updateView();
         });
 
@@ -162,13 +168,25 @@ export class ShopPage {
         if (this.isLoading) return;
 
         const filtered = this.getFilteredProducts();
+        const totalItems = filtered.length;
+        const totalPages = Math.ceil(totalItems / this.itemsPerPage);
+
+        // Safety check for current page
+        if (this.currentPage > totalPages && totalPages > 0) {
+            this.currentPage = totalPages;
+        }
+
+        const start = (this.currentPage - 1) * this.itemsPerPage;
+        const end = start + this.itemsPerPage;
+        const paginated = filtered.slice(start, end);
+
         const grid = this.root.querySelector('#product-grid');
         const count = this.root.querySelector('#results-count');
 
         grid.innerHTML = '';
-        count.textContent = `Showing ${filtered.length} products`;
+        count.textContent = `Showing ${paginated.length} of ${totalItems} products`;
 
-        if (filtered.length === 0) {
+        if (totalItems === 0) {
             grid.innerHTML = `
         <div class="empty-state">
           <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -176,11 +194,52 @@ export class ShopPage {
           <p>Try searching for something else or clearing your filters.</p>
         </div>
       `;
+            this.root.querySelector('#pagination-container').innerHTML = '';
             return;
         }
 
-        filtered.forEach(p => {
+        paginated.forEach(p => {
             grid.appendChild(ProductCard.create(p));
+        });
+
+        this.renderPagination(totalPages);
+    }
+
+    renderPagination(totalPages) {
+        const container = this.root.querySelector('#pagination-container');
+        if (totalPages <= 1) {
+            container.innerHTML = '';
+            return;
+        }
+
+        let html = `
+            <div class="pagination">
+                <button class="btn btn-icon pg-btn" ${this.currentPage === 1 ? 'disabled' : ''} data-page="${this.currentPage - 1}">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+        `;
+
+        for (let i = 1; i <= totalPages; i++) {
+            html += `
+                <button class="pg-num ${this.currentPage === i ? 'active' : ''}" data-page="${i}">${i}</button>
+            `;
+        }
+
+        html += `
+                <button class="btn btn-icon pg-btn" ${this.currentPage === totalPages ? 'disabled' : ''} data-page="${this.currentPage + 1}">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+        `;
+
+        container.innerHTML = html;
+
+        container.querySelectorAll('[data-page]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.currentPage = parseInt(btn.dataset.page);
+                this.updateView();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
         });
     }
 
@@ -283,6 +342,48 @@ export class ShopPage {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
         gap: var(--space-8);
+        margin-bottom: var(--space-12);
+      }
+      .pagination-container {
+        display: flex;
+        justify-content: center;
+        margin-top: var(--space-8);
+      }
+      .pagination {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+      .pg-num {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-medium);
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .pg-num:hover {
+        border-color: var(--accent-base);
+        color: var(--accent-base);
+      }
+      .pg-num.active {
+        background: var(--accent-base);
+        color: white;
+        border-color: var(--accent-base);
+      }
+      .pg-btn {
+        background: var(--bg-tertiary);
+        border-radius: var(--radius-lg);
+      }
+      .pg-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
       }
       .empty-state, .error-state {
         grid-column: 1 / -1;

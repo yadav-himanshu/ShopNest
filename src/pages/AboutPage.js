@@ -1,10 +1,10 @@
 export class AboutPage {
-    constructor(root) {
-        this.root = root;
-    }
+  constructor(root) {
+    this.root = root;
+  }
 
-    async render() {
-        this.root.innerHTML = `
+  async render() {
+    this.root.innerHTML = `
       <div class="page container info-page">
         <header class="info-header">
           <h1>Our Story</h1>
@@ -41,7 +41,7 @@ export class AboutPage {
           </div>
         </section>
 
-        <section class="info-section text-center">
+        <section class="info-section text-center quality-section glass">
           <h2>Quality You Can Trust</h2>
           <p style="max-width: 700px; margin: 0 auto var(--space-8);">Every product in our store undergoes a multi-step quality check. We partner directly with makers and innovators to ensure that you receive nothing but the best.</p>
           <a href="/" class="btn btn-primary btn-lg">Explore Collection</a>
@@ -49,20 +49,27 @@ export class AboutPage {
       </div>
     `;
 
-        this.injectStyles();
-    }
+    this.injectStyles();
+  }
 
-    injectStyles() {
-        if (document.getElementById('info-page-styles')) return;
-        const style = document.createElement('style');
-        style.id = 'info-page-styles';
-        style.textContent = `
+  injectStyles() {
+    if (document.getElementById('info-page-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'info-page-styles';
+    style.textContent = `
       .info-page { padding-top: var(--space-12); padding-bottom: var(--space-20); }
       .info-header { text-align: center; margin-bottom: var(--space-16); }
       .info-header h1 { font-size: 3.5rem; letter-spacing: -2px; margin-bottom: var(--space-4); }
       .info-header .lead { font-size: 1.25rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
       
       .info-section { margin-bottom: var(--space-20); }
+      .quality-section { 
+        padding: var(--space-16) var(--space-8); 
+        border-radius: var(--radius-2xl);
+        margin-bottom: var(--space-12);
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-light);
+      }
       .info-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--space-12); align-items: center; }
       .info-content h2 { font-size: 2rem; margin-bottom: var(--space-6); color: var(--text-primary); }
       .info-content p { font-size: 1.125rem; line-height: 1.7; color: var(--text-secondary); margin-bottom: var(--space-6); }
@@ -87,6 +94,6 @@ export class AboutPage {
         .stats-grid { grid-template-columns: 1fr; gap: var(--space-10); }
       }
     `;
-        document.head.appendChild(style);
-    }
+    document.head.appendChild(style);
+  }
 }
